@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	cmd "github.com/Julia-Marcal/watch-pc-cmd/cmd"
+	cmd "github.com/Julia-Marcal/Watch-pc/cmd"
+
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -20,8 +21,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	if m, ok := m.(cmd.ValorantModel); ok {
-		commandValue := m.Inputs[cmd.Command].Value()
+	if m, ok := m.(cmd.CmdModel); ok {
+		// commandValue := m.Inputs[cmd.Command].Value()
 	}
 
 }
