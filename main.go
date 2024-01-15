@@ -5,6 +5,7 @@ import (
 	"os"
 
 	cmd "github.com/Julia-Marcal/Watch-pc/cmd"
+	pc "github.com/Julia-Marcal/Watch-pc/internal"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -22,7 +23,7 @@ func main() {
 	}
 
 	if m, ok := m.(cmd.CmdModel); ok {
-		// commandValue := m.Inputs[cmd.Command].Value()
+		commandValue := m.Inputs[cmd.Command].Value()
 	}
 
 }
