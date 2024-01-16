@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -41,11 +44,50 @@ func CmdWatchPc() CmdModel {
 }
 
 func (p CmdModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	return nil, nil
+	var cmd []tea.Cmd = make([]tea.Cmd, len(p.Inputs))
+
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.Type {
+		case tea.KeyEnter:
+			if p.focused == len(p.Inputs)-1 {
+				return p, tea.Quit
+			}
+			p.nextInput()
+		case tea.KeyCtrlC, tea.KeyEsc:
+			return p, tea.Quit
+		case tea.KeyShiftTab, tea.KeyCtrlP:
+			p.prevInput()
+		case tea.KeyTab, tea.KeyCtrlN:
+			p.nextInput()
+		}
+		for i := range p.Inputs {
+			p.Inputs[i].Blur()
+		}
+		p.Inputs[p.focused].Focus()
+
+	case errMsg:
+		p.err = msg
+		return p, nil
+	}
+
+	for i := range p.Inputs {
+		p.Inputs[i], cmd[i] = p.Inputs[i].Update(msg)
+	}
+	return p, tea.Batch(cmd...)
 }
 
 func (p CmdModel) View() string {
-	return "nil"
+	s := strings.Builder{}
+	s.WriteString("What is your nickName and Tag?")
+	return fmt.Sprintf(
+		`
+		%s
+		%s
+		
+		`,
+		p.Inputs[Command].View(),
+	) + "\n"
 }
 
 func (p *CmdModel) nextInput() {
