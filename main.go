@@ -24,6 +24,17 @@ func main() {
 
 	if m, ok := m.(cmd.CmdModel); ok {
 		commandValue := m.Inputs[cmd.Command].Value()
+
+		var data interface{}
+
+		data, err = pc.GetSystemInfo(commandValue)
+		if err != nil {
+			fmt.Println("Oh no:", err)
+			os.Exit(1)
+		}
+
+		fmt.Println(data)
+
 	}
 
 }

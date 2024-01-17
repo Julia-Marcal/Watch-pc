@@ -79,7 +79,7 @@ func (p CmdModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 func (p CmdModel) View() string {
 	s := strings.Builder{}
-	s.WriteString("What is your nickName and Tag?")
+	s.WriteString("Type your command")
 	return fmt.Sprintf(
 		`
 		%s
