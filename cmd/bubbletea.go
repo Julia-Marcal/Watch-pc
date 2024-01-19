@@ -83,7 +83,6 @@ func (p CmdModel) View() string {
 	return fmt.Sprintf(
 		`
 		%s
-		%s
 		
 		`,
 		p.Inputs[Command].View(),
